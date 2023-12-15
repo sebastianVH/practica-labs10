@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% comment %}
+      Vamos a crear un FORMULARIO para la edicion
+    {% endcomment %}
+    <div class="container-sm text-center">
+        <h1>Edicion de producto</h1>
+        <form action="{% url 'editar' producto.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" name="nombre" class="form-control" id="nombre" value="{{producto.nombre}}">
+            </div>
+            <div class="mb-3">
+              <label for="precio" class="form-label">Precio</label>
+              <input type="number" class="form-control" id="precio" name="precio" value="{{producto.precio}}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Stock</label>
+              <input type="number" class="form-control" id="stock" name="stock" value="{{producto.stock}}">
+            </div>
+            <div class="mb-3 ">
+              <label class="form-label" for="stock">Categorias</label>
+              <select class="form-select" name="categoria" id="categoria">
+                {% for categoria in categorias %}
+                  {% if categoria == producto.categoria_fk %}
+                    <option value="{{categoria.id}}" selected>{{categoria.nombre}}</option>
+                  {% endif %}
+                    <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+                {% endfor %}
+              </select>
+            </div>
+        </div>
+            <div class="mb-3">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

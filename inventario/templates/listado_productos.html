@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Listado de articulos
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+        <h1>Listado de Productos: </h1>
+
+        <table class="table table-bordered">
+            <thead>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Categoria</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                {% for producto in lista_productos %}
+                    <tr>
+                        <td>{{producto.id}}</td>
+                        <td>{{producto.nombre}}</td>
+                        <td>{{producto.precio}}</td>
+                        <td>{{producto.stock}}</td>
+                        <td>{{producto.categoria_fk}}</td>
+                        <td>
+                            <a href="{% url 'eliminar' producto.id %}">
+                                <button class="btn btn-danger">Eliminar</button>
+                            </a>
+                            <a href="{% url 'editar' producto.id %}">
+                                <button class="btn btn-warning">Actualizar</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="btn btn-success" data-bs-target="#crearProducto" data-bs-toggle="modal">Crear Nuevo producto</button>
+    </div>
+
+    <!-- Button trigger modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="crearProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Cargar Producto</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{% url 'crear' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="nombre" class="form-label">Nombre</label>
+                  <input type="text" name="nombre" class="form-control" id="nombre" required>
+                </div>
+                <div class="mb-3">
+                  <label for="precio" class="form-label">Precio</label>
+                  <input type="number" class="form-control" id="precio" name="precio" required>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Stock</label>
+                  <input type="number" class="form-control" id="stock" name="stock" required>
+                </div>
+                <div class="mb-3 ">
+                  <label class="form-label" for="stock">Categorias</label>
+                  <select class="form-select" name="categoria" id="categoria" required>
+                      <option value="">Seleccione una opcion</option>
+                    {% for categoria in lista_categorias %}
+                      <option value="{{categoria.id}}">{{categoria.nombre}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+            </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
