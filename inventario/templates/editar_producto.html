@@ -8,6 +8,7 @@
         <h1>Edicion de producto</h1>
         <form action="{% url 'editar' producto.id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <!--
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <input type="text" name="nombre" class="form-control" id="nombre" value="{{producto.nombre}}">
@@ -32,9 +33,13 @@
               </select>
             </div>
         </div>
+          -->
+          <table class="table table-bordered">
+            {{formulario.as_table}}
+          </table>
             <div class="mb-3">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </form>
     </div>

@@ -25,6 +25,7 @@ class Productos(models.Model):
     nombre = models.CharField(max_length=30)
     precio = models.FloatField()
     stock = models.IntegerField()
+    imagen = models.ImageField(upload_to='img_inventario',blank=True)
     categoria_fk = models.ForeignKey(Categorias,on_delete=models.CASCADE)
     
     def __str__(self):
